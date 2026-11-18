@@ -1,0 +1,14 @@
+diff --git a/src/desktop/state/FocusState.cpp b/src/desktop/state/FocusState.cpp
+index b3a207091..5a0fb724f 100644
+--- a/src/desktop/state/FocusState.cpp
++++ b/src/desktop/state/FocusState.cpp
+@@ -229,7 +229,8 @@ void CFocusState::rawWindowFocus(PHLWINDOW pWindow, eFocusReason reason, SP<CWLS
+ }
+ 
+ void CFocusState::rawSurfaceFocus(SP<CWLSurfaceResource> pSurface, PHLWINDOW pWindowOwner) {
+-    if (g_pSeatManager->m_state.keyboardFocus == pSurface || (pWindowOwner && g_pSeatManager->m_state.keyboardFocus == pWindowOwner->wlSurface()->resource()))
++    if ((g_pSeatManager->m_state.keyboardFocus == pSurface && m_focusSurface == pSurface) ||
++        (pWindowOwner && g_pSeatManager->m_state.keyboardFocus == pWindowOwner->wlSurface()->resource()))
+         return; // Don't focus when already focused on this.
+ 
+     if (g_pSessionLockManager->isSessionLocked() && pSurface && !g_pSessionLockManager->isSurfaceSessionLock(pSurface))
